@@ -3,54 +3,56 @@
 #include <iterator>
 #include <cctype>
 using namespace std;
-//template <typename T>
-struct Node {
-	char data;
-	Node* next;
-	Node* prev;
-
-	Node(char val, Node* next = nullptr, Node* prev = nullptr) :
-		data(val), next(next), prev(prev){}
-	;
-
-};
+template <typename T>
 
 
 
-class ForwardIterator {
-	Node* ptr;
 
-public:
-	//ForwardIterator(Node* val);
-	ForwardIterator(Node* startNode) : ptr(startNode) {}
-
-	char& operator* () {
-		return ptr->data;
-	}
-
-	ForwardIterator& operator++() {
-		ptr = ptr->next;
-
-		while (ptr && !isupper(ptr->data)) {
-			ptr = ptr->next;
-		}
-		return *this;
-	}
-	bool operator==(const ForwardIterator& other)const {
-		return ptr == other.ptr;
-	}
-	bool operator!=(const ForwardIterator& other) const {
-		return !(*this == other);
-
-	}
-};
 
 
 	 
 	class List {
-		Node* head = nullptr;
-		Node* tail = nullptr;
+		T* head = nullptr;
+		T* tail = nullptr;
 	public:
+
+		class ForwardIterator {
+			struct Node {
+				char data;
+				T* next;
+				T* prev;
+
+				Node(char val, T* next = nullptr, T* prev = nullptr) :
+					data(val), next(next), prev(prev) {}
+				;
+
+			};
+			T* ptr;
+
+		public:
+			//ForwardIterator(Node* val);
+			ForwardIterator(T* startNode) : ptr(startNode) {}
+
+			char& operator* () {
+				return ptr->data;
+			}
+
+			ForwardIterator& operator++() {
+				ptr = ptr->next;
+
+				while (ptr && !isupper(ptr->data)) {
+					ptr = ptr->next;
+				}
+				return *this;
+			}
+			bool operator==(const ForwardIterator& other)const {
+				return ptr == other.ptr;
+			}
+			bool operator!=(const ForwardIterator& other) const {
+				return !(*this == other);
+
+			}
+		};
 		friend std::ostream& operator <<(std::ostream& os, const Node& node);
 		using iterator = ForwardIterator;
 
